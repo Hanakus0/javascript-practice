@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var storage = localStorage;
+
+    storage.setItem('fluit1', 'りんご');
+    storage.fluit2 = 'みかん';
+    storage['fluit3'] = 'ぶどう';
+
+    /**
+     * 1) プロパティ構文：storage.キー名
+     *    > 一般的。シンプルで使いやすい。
+     *    > ただし、キー名に「123」など識別子として扱えないものは、
+     *    > プロパティ構文では利用できない。→ 2)、3) は可能
+     * 
+     * 2) ブラケット構文：storage['キー名']
+     *    > キー名が必ず文字列になる。
+     *    > そのため文字列に応じたキー名の値を取り出すなど、
+     *    > 可変的なキー名指定および値の取り出しが実装可能
+     * 
+     * 3) メソッド構文(getter)：storage.getItem('キー名')
+     *    メソッド構文(setter)：storage.setItem('キー名', '値')
+     *    > ブラケット構文と特徴が似ている。
+     *    > 冗長的な分、ブラケット構文の方が良い。
+     */ 
+    console.log(storage.getItem('fluit1'));
+    console.warn(storage.getItem('fluit2'));
+    console.error(storage.getItem('fluit3'));
+    console.log(storage.fluit1);
+    console.warn(storage.fluit2);
+    console.error(storage.fluit3);
+    console.log(storage['fluit1']);
+    console.warn(storage['fluit2']);
+    console.error(storage['fluit3']);
+    storage.clear(); 
+  // </script>
+</body>
+</html>

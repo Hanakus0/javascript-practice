@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    localStorage.clear();
+    var storage = localStorage;
+
+    storage.fluit1 = 'りんご';
+    console.info(storage);
+    storage.fluit2 = 'みかん';
+    console.info(storage);
+    storage.fluit3 = 'ぶどう';
+    console.info(storage);
+
+    // for(var i = 0, len = storage.length; i < len; i++) {
+    for(var i = 0; i < storage.length; i++) {
+      var k = storage.key(i);
+      var v = storage[k];
+      console.log(k + ' : ' + v);
+    }
+  </script>
+</body>
+</html>
