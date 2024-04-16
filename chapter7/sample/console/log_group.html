@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Start parent group
+    console.group('上位グループ');
+    for (var i = 0; i < 3; i++) {
+      // Start child group
+      console.group('下位グループ' + i);
+      for (var j = 0; j < 3; j++) {
+        console.log('i:' + i + ' , j:' + j);
+      }
+      // End child group
+      console.groupEnd();
+    }
+    // End parent group
+    console.groupEnd();
+    console.error('----------------------------------------');
+    console.warn("'groupCollapsed'であれば以下の通り最初から折りたたまれている状態になる。");
+    // Start parent group
+    console.groupCollapsed('上位グループ');
+    for (var i = 0; i < 3; i++) {
+      // Start child group
+      console.groupCollapsed('下位グループ' + i);
+      for (var j = 0; j < 3; j++) {
+        console.log('i:' + i + ' , j:' + j);
+      }
+      // End child group
+      console.groupEnd();
+    }
+    // End parent group
+    console.groupEnd();
+  </script>
+</body>
+</html>
