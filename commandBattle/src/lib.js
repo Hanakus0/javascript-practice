@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Friend class
+ * Friend Class
  */
 class Friend {
   // コンストラクタ
@@ -20,7 +20,7 @@ class Friend {
   }
 
   // Method:行動する
-  //　`command`プロパティに応じて処理を振り分ける
+  // `command`プロパティに応じて処理を振り分ける
   action() {
     if(this.hp > 0) {
       // コマンドに応じた処理を行う
@@ -94,7 +94,94 @@ class Friend {
 }
 
 /**
- * Message class  
+ * Enemy Class
+ * トロル・ドラゴン
+ */
+class Enemy {
+  // コンストラクタ
+  constructor(name, hp, offense, speed, path) {
+    this.name = name;
+    this.type = "enemy";    // 敵味方種別
+    this.hp = hp;
+    this.liveFlag = true;
+    this.offense = offense;
+    this.speed = speed;
+    this.path = path;       // 画像の場所
+  }
+
+  // 行動する
+  action() {
+    if(this.hp > 0) {
+      this.attack();
+    }
+  }
+}
+
+/**
+ * Troll Class
+ * 攻撃メソッド：素手
+ */
+class Troll extends Enemy {
+  constructor(name, hp, offense, speed, path){
+    super(name, hp, offense, speed, path);
+  }
+
+  // 攻撃メソッド
+  attack(){
+    // 生存している味方をランダムに選択する
+    let f = characters[searchLivedcharacterRandom("friend")];
+
+    // 攻撃対象の体力から自分の攻撃力分を引く
+    f.hp -= this.offense;
+
+    // 攻撃相手の体力がマイナスになる場合 ０ にする。
+    if(f.liveFlag) {
+      Message.printMessage(this.name + "が襲いかかってきた<br>" + f.name + "は" + this.offense + "のダメージを受けた！<br>");
+    } else {
+      Message.printMessage(this.name + "の攻撃・・・<br>" + f.name + "は倒れている<br>");
+    }
+  }
+}
+
+/**
+ * Dragon Class
+ * 攻撃メソッド：炎攻撃
+ */
+class Dragon extends Enemy {
+  constructor(name, hp, offense, speed, path) {
+    super(name, hp, offense, speed, path);
+  }
+
+  // 攻撃メソッド
+  attack() {
+    // 一定確率で攻撃を失敗する
+    if(getRandomIntInclusive(0, 4) === 4) {
+      Message.printMessage("ドラゴンは<br>グフッグフッと咳き込んんでいる・・・<br>");
+      return;
+    }
+
+    // 生存している味方をランダムに選択する
+    let f = characters[searchLivedcharacterRandom("friend")];
+
+    // 攻撃対象の体力から自分の攻撃力を引く
+    f.hp -= this.offense;
+
+    // 攻撃相手の体力がマイナスになる場合は 0 にする
+    if(f.hp < 0) {
+      f.hp =  0;
+    }
+
+    // 攻撃相手が生存していれば攻撃
+    if(f.liveFlag) {
+      Message.printMessage(this.name + "は炎を吹いた<br>" + f.name + "は" + this.offense + "のダメージを受けた！<br>");
+    } else {
+      Message.printMessage(this.name + "の攻撃・・・<br>" + f.name + "は倒れている<br>");
+    }
+  }
+}
+
+/**
+ * Message Class  
  */ 
 class Message {
   // メッセージを表示
@@ -107,4 +194,15 @@ class Message {
   static addMessage(text) {
     messageView.innerHTML += text;
   }
+}
+
+/**
+ * common methods
+ */
+
+// min から max までのランダムな整数を返す
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);   // .cali  切り上げ
+  max = Math.floor(max);  // .floor 切り捨て
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
