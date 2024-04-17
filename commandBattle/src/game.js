@@ -1,3 +1,5 @@
+'use strict';
+
 // キャラクターをインスタンス化
 let friend1 = new Friend("あれす", 180, 66, 13, 2, 45);
 let friend2 = new Friend("なーしゃ", 110, 16, 12, 3, 45);
