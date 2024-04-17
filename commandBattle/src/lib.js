@@ -197,9 +197,68 @@ class Message {
 }
 
 /**
+ * Control Array of characters
+ */
+// キャラクターの全滅判定
+// 引数 type で指定されたキャラクター群が全滅しているかを調べる
+function isAliveByType(type) {
+  for(let c of characters) {
+    // 引数の type に該当するキャラが一人でも生存していれば true
+    if(c.type === type && c.liveFlag === true) {
+      return true;
+    }
+  }
+  // 全滅している場合は false
+  return false;
+}
+
+// 名前でキャラクターの探索。および配列の要素番号を返す
+function searchCharacterByName(name) {
+  // 探索した配列の要素番号
+  let characterElementNum = [];
+
+  // 指定されたキャラクターを探す
+  let i = 0;
+  for(let c of characters) {
+    if(c.name === name) {
+      characterElementNum.push(i);
+    }
+    ++i;
+  }
+  return characterElementNum;
+}
+
+// type で指定された生存しているキャラクターを探す。
+// その後、配列の要素番号を返す
+function searchLivecharacterByType(type) {
+  // type で指定された生存しているキャラクター配列の要素番号
+  let characterElementNum = [];
+
+  // type で指定された生存しているキャラクターを探す
+  let i = 0;
+  for(let c of characters) {
+    if(c.type === type && c.liveFlag === true) {
+      characterElementNum.push(i);
+    }
+    ++i;
+  }
+}
+
+// type で指定された生存しているキャラクターの要素番号をランダムで返す
+function searchLivedcharacterRandom(type){
+  // 生存しているキャラクターを探す。その後、その要素番号を詰める
+  let livecharacter = searchLivecharacterByType(type);
+
+  // 生存しているキャラクターの中からランダムで一人選ぶ
+  let ramdomValue = getRandomIntInclusive(0, livecharacter.length - 1);
+
+  return livecharacter[ramdomValue];
+}
+
+
+/**
  * common methods
  */
-
 // min から max までのランダムな整数を返す
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);   // .cali  切り上げ
