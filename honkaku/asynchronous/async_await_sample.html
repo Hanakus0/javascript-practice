@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+    /**
+     * 【`await`を使用する場合】
+     * 数珠繋ぎではなく、入れ子構造的な記述が可能になる。
+     * 非同期処理の発火点に処理順を列挙できる。
+     */
+    function sampleResolveAwait(value) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value * 2);
+        }, 2000);
+      })
+    }
+    
+    // これを発火点（親）として処理順を列挙可能
+    async function sampleAwait() {
+      const result = await sampleResolveAwait(5);
+      return result + 5;
+    }
+    
+    sampleAwait().then(result => {
+      console.log(result);
+    });
+    
+    /**
+     * 【`await`を使用しない場合】
+     * 数珠繋ぎで`.then`を行う。
+     * 処理させたい順を明記する形になる。
+     * func to func なコーディングになるため冗長的。
+     */
+    function sampleResolve(value){
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value * 2);
+        }, 6000);
+      })
+    }
+
+    function sample() {
+      return sampleResolve(5).then(result => {
+        return result + 5;
+      });
+    }
+
+    sample().then(result => {
+      console.log(result);
+    });
+
+  </script>
+</body>
+</html>

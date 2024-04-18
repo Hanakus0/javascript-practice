@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function sampleResolve(value) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value);
+        }, 1000);
+      });
+    }
+
+    // A * B + C
+    async function sample() {
+      return await sampleResolve(5) * await sampleResolve(10) + await sampleResolve(20);
+    }
+
+    async function sample2(){
+      const a = await sampleResolve(5);
+      const b = await sampleResolve(10);
+      const c = await sampleResolve(20);
+      return a * b + c;
+    }
+
+    // 値が取得できない
+    async function sample3(){
+      const a = sampleResolve(5);
+      console.warn(a);
+      const b = sampleResolve(10);
+      console.warn(b);
+      const c = sampleResolve(20);
+      console.warn(c);
+      return a * b + c;
+    }
+
+    sample().then((v) => {
+      console.log("sample1 : " + v);
+    });
+
+    sample2().then((v) => {
+      console.log("sample2 : " + v);
+    });
+
+    sample3().then((v) => {
+      console.log("sample3 : " + v);
+    });
+
+  </script>
+</body>
+</html>

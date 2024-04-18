@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    console.group('function resolveSample()');
+      // Return result. As a result, run resolve.
+      async function resolveSample() {
+        return 'resolve!!';
+      }
+
+      // resolveSample() return Promise object and run resolve process. Therefore, run then().
+      resolveSample().then(value => {
+        console.log(value);
+      });
+    console.groupEnd();
+    
+    console.group('function rejectSample()');
+    // Throw new Error.(Don't return result). Therefore, run reject.
+    async function rejectSample() {
+      throw new Error('reject!!');
+    }
+    
+    // rejectSample() return Promise object and run reject process. Therefore, run cathc().
+    rejectSample().catch(err => {
+      console.log(err);
+    });
+    console.groupEnd();
+    
+    console.group('function resolveError()');
+      // This func is not `async function`.
+      // Therefore, Doesn't return Promise Object.
+      function resolveError() {
+        return 'resolveError!!';
+      }
+      
+      // resolveError doesn't Promise Object.
+      // Therefore, Occur error and can't run then().
+      rejectSample.then(value => {
+        console.log(value);
+      });
+      
+      rejectSample.catch(value => {
+        console.log(value);
+      });
+    console.groupEnd();
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+    /**
+     * 【`await`を使用する場合】
+     * 数珠繋ぎではなく、入れ子構造的な記述が可能になる。
+     * 非同期処理の発火点に処理順を列挙できる。
+     */
+
+    // これを発火点（親）として処理順を列挙可能
+    
+    function sampleResolveAwait(value) {
+console.warn("sampleResolveAwait()");
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value * 2);
+        }, 2000);
+      })
+    }
+    
+    async function sampleAwait() {
+console.warn("sampleAwait()");
+      const result = await sampleResolveAwait(5);
+      return result + 5;
+    }
+
+    sampleAwait().then(result => {
+      console.log("sampleAwait().then : " + result);
+    });
+
+/**
+ * `new Promise`が発火点になっている。
+ * 不明点：
+ */
+  function sampleResolve(value){
+console.warn("sampleResolve()");
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value * 2);
+        }, 6000);
+      })
+    }
+
+    sample().then(result => {
+      console.log("sample().then : " + result);
+    });
+
+    function sample() {
+console.warn("sample()");
+      return sampleResolve(5).then(result => {
+        return result + 5;
+      });
+    }
+
+  </script>
+</body>
+</html>

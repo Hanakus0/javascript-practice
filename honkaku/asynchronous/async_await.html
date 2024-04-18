@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function sleep(ms) {
+      return new Promise(function(resolve) {
+        // Sleep during args:ms[ms]
+        // Run only once.
+        setTimeout(resolve, ms);
+      });
+    }
+
+    // @return Promise Object
+    async function battle() {
+      document.write("スリープはじめ<br>");
+
+      // Waiting for finish async function's run.
+      await sleep(3000); // Waiting 3s.
+
+      document.write("スリープおわり<br>");
+
+      // resolve(10)
+      return 10;
+    }
+
+    let p = battle();
+
+    document.write("hello<br>");
+    
+    // Run 3s later.
+    p.then(
+      function(value){
+        document.write(value);
+      }
+    );
+    
+    document.write("world!!!<br>");
+
+  </script>
+</body>
+</html>

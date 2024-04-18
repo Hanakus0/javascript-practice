@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Promise生成
+    function sampleResolve(value) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(value);
+        }, 1000);
+      });
+    }
+
+    // sampleResolve を実行後を
+    function sample() {
+      let result = 0;
+
+      return sampleResolve(5).then(
+        val => {
+          result += val; // 0+5
+          return sampleResolve(10);
+        }
+      ).then(
+        val => {
+          result *= val; // 5*10
+          return sampleResolve(20);
+        }
+      ).then(
+        val => {
+          result += val; // 5+20
+          return result;
+        }
+      );
+    }
+
+    sample().then((v) => {
+      console.log(v);
+    });
+
+  </script>
+</body>
+</html>
